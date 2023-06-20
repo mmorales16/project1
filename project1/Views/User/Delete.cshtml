@@ -1,0 +1,30 @@
+﻿@model project1.Models.DTO.UserDTO
+
+@{
+    ViewBag.Title = "Delete User";
+}
+
+<h2>Delete User</h2>
+
+<p>Are you sure you want to delete the following user?</p>
+
+<table class="table">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Email</th>
+    </tr>
+    <tr>
+        <td>@Model.Id</td>
+        <td>@Model.Name</td>
+        <td>@Model.Email</td>
+    </tr>
+</table>
+
+@using (Html.BeginForm("Delete", "User", new { id = Model.Id }, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <input type="submit" value="Delete" class="btn btn-danger" />
+    @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default" })
+}
