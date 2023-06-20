@@ -89,6 +89,20 @@ namespace project1.Controllers
 
         public ActionResult Delete(int id)
         {
+            UserDTO user = userRepository.GetUserById(id);
+            if (user == null)
+            {
+                // El usuario no existe, mostrar mensaje de error o redirigir a otra vista
+                return RedirectToAction("Index");
+            }
+
+            return View(user);
+        }
+
+        [HttpPost]
+        [ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int id)
+        {
             try
             {
                 string result = userRepository.DeleteUser(id);

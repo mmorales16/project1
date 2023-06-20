@@ -5,8 +5,8 @@
 }
 
 <h2>User List</h2>
-<a href="@Url.Action("Create","User")">Create</a>
-
+<a href="@Url.Action("Create","User")"class="btn btn-success">Create</a>
+<br/>
 <table class="table">
     <thead>
         <tr>
@@ -25,8 +25,8 @@
                 <td>@user.Name</td>
                 <td>@user.Email</td>
                 <td>
-                    <a href="@Url.Action("Edit", "User", new { id = user.Id })"> Edit</a>
-                    <a href="@Url.Action("Delete", "User", new { id = user.Id })"> Delete</a>
+                    <a href="@Url.Action("Edit", "User", new { id = user.Id })" class="btn btn-primary">Edit</a>
+                    <a href="@Url.Action("Delete", "User", new { id = user.Id })" class="btn btn-danger"> Delete</a>
                 </td>
             </tr>
         }

@@ -11,30 +11,10 @@
 </head>
 <body>
 
-    <h2>Create new user </h2>
-    <div>
-        <h2>Usual way </h2>
-        <form action="/User/Create" method="post" class="form">
-            <div class="form-group">
-                <label for="Name">Name:</label>
-                <input type="text" id="Name" name="Name" class="form-control">
-                <input asp-for="Name" />
-            </div>
-
-            <div class="form-group">
-                <label for="Email">Email:</label>
-                <input type="text" id="Email" name="Email" class="form-control">
-            </div>
-
-            <button type="submit" class="btn btn-primary">Save</button>
-        </form>
-    </div>
-
-    <br />
-    <br />
+    <h2>Update user </h2>
 
     <div>
-        <h2>Razor way </h2>
+  
         @using (Html.BeginForm("Edit", "User", FormMethod.Post, new { @class = "form" }))
         {
 
@@ -54,7 +34,7 @@
 
 
 
-            <button type="submit" class="btn btn-primary">Save</button>}
+            <button type="submit" class="btn btn-primary">Update</button>}
     </div>
 </body>
 </html>

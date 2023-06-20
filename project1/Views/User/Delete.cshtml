@@ -2,29 +2,53 @@
 
 @{
     ViewBag.Title = "Delete User";
+   
 }
+<!DOCTYPE html>
 
-<h2>Delete User</h2>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+</head>
+<body>
 
-<p>Are you sure you want to delete the following user?</p>
+    <h2>Delete User</h2>
 
-<table class="table">
-    <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Email</th>
-    </tr>
-    <tr>
-        <td>@Model.Id</td>
-        <td>@Model.Name</td>
-        <td>@Model.Email</td>
-    </tr>
-</table>
+    <p>Are you sure you want to delete the record??</p>
 
-@using (Html.BeginForm("Delete", "User", new { id = Model.Id }, FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Email</th>
+            </tr>
+            <tr>
+                <td>@Model.Id</td>
+                <td>@Model.Name</td>
+                <td>@Model.Email</td>
+            </tr>
+        </thead>
+    </table>
 
-    <input type="submit" value="Delete" class="btn btn-danger" />
-    @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default" })
-}
+    @using (Html.BeginForm("Delete", "User", new { id = Model.Id }, FormMethod.Post, new { id = "deleteForm" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-default" })
+    }
+
+    @section Scripts {
+        <script>
+            $(document).ready(function () {
+                $('#deleteForm').submit(function () {
+                    return confirm("Are you sure you want to delete the record?");
+                });
+            });
+        </script>
+    }
+</body>
+</html>
+
