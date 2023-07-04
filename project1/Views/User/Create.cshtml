@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Create";
 }
+
 <!DOCTYPE html>
 
 <html>
@@ -10,44 +11,28 @@
     <title>Create</title>
 </head>
 <body>
+    <div>
+        <h2>Razor way</h2>
+        @using (Html.BeginForm("Create", "User", FormMethod.Post, new { @class = "form" }))
+        {
+            <div class="form-group">
+                <label>Name:</label>
+                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+            </div>
 
-        <h2>Create new user </h2>
-        <div>
-            <h2>Usual way </h2>
-            <form action="/User/Create" method="post" class="form">
-                <div class="form-group">
-                    <label for="Name">Name:</label>
-                    <input type="text" id="Name" name="Name" class="form-control">
-                </div>
+            <div class="form-group">
+                <label>Email:</label>
+                @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+            </div>
 
-                <div class="form-group">
-                    <label for="Email">Email:</label>
-                    <input type="text" id="Email" name="Email" class="form-control">
-                </div>
+            <div class="form-group">
+                <label>Role:</label>
+                @Html.DropDownListFor(model => model.RoleId, (SelectList)ViewBag.Roles, "Select a role", new { @class = "form-control" })
+            </div>
 
-                <button type="submit" class="btn btn-primary">Save</button>
-            </form>
-        </div>
 
-        <br />
-        <br />
-
-        <div>
-            <h2>Razor way </h2>
-          @using (Html.BeginForm("Create", "User", FormMethod.Post, new { @class = "form" }))
-                {
-                    <div class="form-group">
-                        <label>Name:</label>
-                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
-                    </div>
-
-                    <div class="form-group">
-                        <label>Email:</label>
-                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">Save</button>
-                }
-        </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+        }
+    </div>
 </body>
 </html>

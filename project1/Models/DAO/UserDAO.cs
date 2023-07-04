@@ -9,8 +9,10 @@ namespace project1.Models.DAO
 {
     public class UserDAO
     {
-        
-        public string InsertUser(UserDTO user)
+
+        public string InsertUser(UserDTO user, int roleId)
+
+
         {
             string response = "Failed";
 
@@ -20,31 +22,55 @@ namespace project1.Models.DAO
                 {
                     connection.Open();
 
-                    string insertQuery = "INSERT INTO Users (name, email) VALUES (@name, @email)";
+                    string insertUserQuery = "INSERT INTO Users (name, email) VALUES (@name, @email)";
+                    string insertRolesUsuarioQuery = "INSERT INTO RolesUsuario (id_user, id_role) VALUES (@userId, @roleId)";
 
-                    using (MySqlCommand command = new MySqlCommand(insertQuery, connection))
+                    using (MySqlCommand userCommand = new MySqlCommand(insertUserQuery, connection))
                     {
-                        command.Parameters.AddWithValue("@name", user.Name);
-                        command.Parameters.AddWithValue("@email", user.Email);
+                        userCommand.Parameters.AddWithValue("@name", user.Name);
+                        userCommand.Parameters.AddWithValue("@email", user.Email);
 
-                        int rowsAffected = command.ExecuteNonQuery();
+                        int rowsAffected = userCommand.ExecuteNonQuery();
 
                         if (rowsAffected > 0)
                         {
-                            response = "Success";
-                            Console.WriteLine("Registro insertado correctamente.");
+                            // Obtén el ID del usuario insertado
+                            int userId = (int)userCommand.LastInsertedId;
+
+                            // Utiliza la conexión de AuthorizationConfig para insertar en RolesUsuario
+                            using (var context = new AuthorizationConfig())
+                            {
+                                var authConnection = context.Database.Connection;
+
+                                authConnection.Open();
+
+                                using (MySqlCommand roleCommand = new MySqlCommand(insertRolesUsuarioQuery, (MySqlConnection)authConnection))
+                                {
+                                    roleCommand.Parameters.AddWithValue("@userId", userId);
+                                    roleCommand.Parameters.AddWithValue("@roleId", user.RoleId);
+
+                                    int rolesAffected = roleCommand.ExecuteNonQuery();
+
+                                    if (rolesAffected > 0)
+                                    {
+                                        response = "Success";
+                                        Console.WriteLine("User and RolesUsuario inserted successfully.");
+                                    }
+                                }
+                            }
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error in project1.Models.DAO.UserDAO.InserUser:" + ex.Message);
+                Console.WriteLine("Error in UserDAO.InsertUser: " + ex.Message);
             }
 
             return response;
-        }    
-        
+        }
+
+
         public List<UserDTO> ReadUsers()
         {
             List<UserDTO> users = new List<UserDTO>();
@@ -87,12 +113,7 @@ namespace project1.Models.DAO
         /// <param name="id"></param>
         /// <returns></returns>
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        /// 
+       
         public UserDTO GetUserById(int id)
         {
             try

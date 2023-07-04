@@ -5,6 +5,10 @@
 }
 
 <h2>User List</h2>
+
+@if (Session["role"].ToString() == "ADMIN") { 
+
+ 
 <a href="@Url.Action("Create","User")"class="btn btn-success">Create</a>
 <br/>
 <table class="table">
@@ -32,5 +36,11 @@
         }
     </tbody>
 </table>
+
+}
+            else
+            {
+              <h2> No access</h2>
+            }
 
 

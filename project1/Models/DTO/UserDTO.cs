@@ -10,5 +10,7 @@ namespace project1.Models.DTO
         public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
+
+        public int RoleId { get; set; }  // Nueva propiedad para el ID del rol.
     }
 }
