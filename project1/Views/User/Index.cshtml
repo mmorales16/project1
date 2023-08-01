@@ -2,30 +2,49 @@
 
 @{
     ViewBag.Title = "Index";
+   
 }
 
 <h2>User List</h2>
 
-@if (Session["role"].ToString() == "ADMIN") { 
+@if (Session["role"].ToString() == "ADMIN")
+{
 
- 
-<a href="@Url.Action("Create","User")"class="btn btn-success">Create</a>
-<br/>
-<table class="table">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
 
-        @foreach (var user in Model)
-        {
+    <a href="@Url.Action("Create","User")" class="btn btn-success">Create</a>
+    <a href="@Url.Action("Createx","User")" class="btn btn-success">Create Roles Usuario </a>
+    <a href="@Url.Action("RolesList","User")" class="btn btn-primary">Roles Usuario </a>
+    <br />
+    <table class="table">
+        <thead>
             <tr>
-                <td>@user.Id</td>
+                <th>ID</th>
+                <th>Role</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var user in Model)
+            {
+            <tr>
+                @*@<td><a href="#" onclick="getRole(@user.Id)"> @user.Id </a></td>*@
+                <th>@Ajax.ActionLink(
+                                        @user.Id.ToString(),
+                                        "getRole",
+                                        new {id = user.Id.ToString() },
+                                        new AjaxOptions
+                                        {
+                                            UpdateTargetId = "role_" + user.Id,
+                                            InsertionMode = InsertionMode.Replace,
+                                            HttpMethod = "GET"
+
+                                        }
+                   ) 
+                </th>
+                <td id="role_@user.Id"></td>
                 <td>@user.Name</td>
                 <td>@user.Email</td>
                 <td>
@@ -33,14 +52,38 @@
                     <a href="@Url.Action("Delete", "User", new { id = user.Id })" class="btn btn-danger"> Delete</a>
                 </td>
             </tr>
-        }
-    </tbody>
-</table>
+            }
+        </tbody>
+    </table>
 
 }
-            else
-            {
-              <h2> No access</h2>
-            }
+else
+{
+    <h2> No access</h2>
+}
 
 
+@section scripts
+{
+
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+ <script>
+
+         function getRole(idUser) {
+           
+
+             $.ajax({
+                 url: "@Url.Action("getRole")",
+                 data: { id: idUser },
+                 type: "GET",
+                 success: function (response) {
+                     $("#role_" + idUser).text(response);
+                 },
+                 error: function (xhr, textStatus, errorThrow) {
+                     $("#role_" + idUser).text("");
+                 }
+             })
+         }
+    
+    </script>
+}

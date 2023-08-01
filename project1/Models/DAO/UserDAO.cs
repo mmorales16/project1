@@ -70,6 +70,46 @@ namespace project1.Models.DAO
             return response;
         }
 
+        public string InsertUserx(RolesUsuario user)
+
+
+        {
+            string response = "Failed";
+
+            try
+            {
+                using (var context = new AuthorizationConfig())
+                {
+                    var authConnection = context.Database.Connection;
+                    authConnection.Open();
+
+                    string insertUserQuery2 = "INSERT INTO RolesUsuario (id_user, id_role) VALUES (@userId, @roleId)";
+
+                    using (MySqlCommand roleCommand = new MySqlCommand(insertUserQuery2, (MySqlConnection)authConnection))
+                   
+                    {
+                        roleCommand.Parameters.AddWithValue("@userId", user.id_user);
+                        roleCommand.Parameters.AddWithValue("@roleId", user.id_role);
+
+                        int rowsAffected = roleCommand.ExecuteNonQuery();
+                  
+
+                        if (rowsAffected > 0)
+                        {
+                            return response;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error in UserDAO.InsertUser: " + ex.Message);
+            }
+
+            return response;
+        }
+
+
 
         public List<UserDTO> ReadUsers()
         {
@@ -81,7 +121,9 @@ namespace project1.Models.DAO
                 {
                     connection.Open();
 
-                    string selectQuery = "SELECT * FROM Users";
+                    
+
+        string selectQuery = "SELECT * FROM Users";
 
                     using (MySqlCommand command = new MySqlCommand(selectQuery, connection))
                     {
@@ -106,6 +148,44 @@ namespace project1.Models.DAO
             }
             return users;
         }
+
+
+        public List<RolesUsuario> ReadList_Roles()
+        {
+            List<RolesUsuario> users = new List<RolesUsuario>();
+
+            try
+            {
+                using (var context = new AuthorizationConfig())
+                {
+                    var authConnection = context.Database.Connection;
+                    authConnection.Open();
+
+                    string selectQuery = "SELECT * FROM RolesUsuario";
+
+                    using (MySqlCommand command = new MySqlCommand(selectQuery, (MySqlConnection)authConnection))
+                    {
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                RolesUsuario user = new RolesUsuario();
+                                user.id = reader.GetInt32("id");
+                                user.id_role = reader.GetInt32("id_role");
+                                user.id_user = reader.GetInt32("id_user");
+                                users.Add(user);
+                            }
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error in project1.Models.DAO.UserDAO.InserUser:" + ex.Message);
+            }
+            return users;
+        }
         /// <summary>
         /// 
         /// </summary>
@@ -113,7 +193,7 @@ namespace project1.Models.DAO
         /// <param name="id"></param>
         /// <returns></returns>
 
-       
+
         public UserDTO GetUserById(int id)
         {
             try

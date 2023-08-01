@@ -176,9 +176,9 @@
     <Compile Include="Models\Config.cs" />
     <Compile Include="Models\DAO\UserDAO.cs" />
     <Compile Include="Models\DTO\UserDTO.cs" />
+    <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\Roles.cs" />
     <Compile Include="Models\RolesUsuario.cs" />
-    <Compile Include="Models\ViewModels\EditUserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -203,6 +203,8 @@
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -226,8 +228,11 @@
     <Content Include="Views\User\Create.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\User\Delete.cshtml" />
+    <Content Include="Views\User\Createx.cshtml" />
+    <Content Include="Views\User\RolesList.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Models\ViewModels\" />
     <Folder Include="Views\UserDAO\" />
   </ItemGroup>
   <ItemGroup>

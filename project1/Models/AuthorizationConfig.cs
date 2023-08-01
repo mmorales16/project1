@@ -14,6 +14,7 @@ namespace project1.Models
 
         public virtual DbSet<Roles> Roles { get; set; }
         public virtual DbSet<RolesUsuario> RolesUsuario { get; set; }
+        public virtual DbSet<Invoice> Invoices { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

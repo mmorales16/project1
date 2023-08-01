@@ -13,6 +13,8 @@ namespace project1.Models
 
         public int id_role { get; set; }
 
+        [Required(ErrorMessage = "Please select a role")]
+        [Display(Name = "Role")]
         public int id_user { get; set; }
     }
 }

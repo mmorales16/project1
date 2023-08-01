@@ -1,0 +1,39 @@
+﻿@model project1.Models.RolesUsuario
+@{
+    ViewBag.Title = "Create2";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+</head>
+<body>
+    <div>
+        <h2>Razor way</h2>
+        @using (Html.BeginForm("Createx", "User", FormMethod.Post, new { @class = "form" }))
+        {
+
+
+            <div class="form-group">
+                <label>Id usuario:</label>
+                @Html.TextBoxFor(model => model.id_user, new { @class = "form-control" })
+            </div>
+
+
+         
+            <div class="form-group">
+                <label>Role:</label>
+                @Html.DropDownListFor(model => model.id_role, (SelectList)ViewBag.Roles, "Select a role", new { @class = "form-control" })
+
+            </div>
+
+
+            <button type="submit" class="btn btn-primary">Save</button>
+        }
+    </div>
+
+</body>
+</html>
+
